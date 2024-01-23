@@ -23,7 +23,7 @@
             <text>{{item.date}}</text>
             <text style="margin-left:20rpx;font-size:13px;color:#5882FA;" bindtap="delit" data-idx="{{item._id}}"
                 wx:if="{{item.openid == openid}}">删除</text>
-            <view class='timeArea-right'>
+            <!-- <view class='timeArea-right'>
                 <view class='zan-pinglun' wx:if="{{showbar}}" style="height:90rpx;">
                     <text class='iconfont icon-xin' data-idx="{{item.id}}" data-index="{{index}}"
                         data-nickname="{{item.nickname}}" catchtap='ilike' wx:if="{{liked==false}}"> 赞</text>
@@ -34,19 +34,20 @@
                     </text>
                 </view>
                 <text class='iconfont icon-pinglun1' data-idx="{{item.id}}" catchtap='openActionBar'></text>
-            </view>
+            </view> -->
         </view>
+        
         <!--点赞和comment显示-->
-        <view class='commentArea'>
-            <view class='like' wx:if="{{likeList.length!=0}}" style="display: flex;flex-wrap: wrap;flex-direction: row;width:100%;">
+        <!-- <view class='commentArea'>
+            <view class='like' wx:if="{{item.likeList.length!=0}}" style="display: flex;flex-wrap: wrap;flex-direction: row;width:100%;">
                 <text class='iconfont icon-xin'></text>
-                <view wx:for="{{likeList}}" wx:key="index" wx:for-item="likeitem">
+                <view wx:for="{{item.likeList}}" wx:key="index" wx:for-item="likeitem">
                     <view >{{index == 0?'':','}}{{likeitem.userInfo.nickName}}</view>
                 </view>
             </view>
 
-            <view class='comment' wx:for="{{commentList}}" wx:for-item="citem"
-                wx:if="{{commentList.length!=0}}" wx:for-index="tindex" wx:key="tindex">
+            <view class='comment' wx:for="{{item.commentList}}" wx:for-item="citem"
+                wx:if="{{item.commentList.length!=0}}" wx:for-index="tindex" wx:key="tindex">
                 <view wx:if="{{citem.replyuserInfo == null}}" bindtap="huifu" data-idx="{{citem._id}}"
                     data-replyitem="{{item.userInfo}}" data-index="{{index}}" data-openid="{{citem.openid}}" bindlongpress="deletecomment">
                     <text class='comment-nickname'>{{citem.userInfo.nickName}}:</text>
@@ -60,6 +61,19 @@
                     <text>{{citem.replycontent}}</text>
                 </view>
             </view>
-        </view>
+        </view> -->
+    </view>
+    
+</view>
+<view class="operations">
+    <view class="operations-like operations-item" hover-class="none" hover-stop-propagation="false" bindtap="ilike">
+        <t-icon size="16" name="{{item.isLike ? 'heart-filled' : 'heart'}}" style="margin-right: 2px;color: {{item.isLike ? 'red' : '#333'}};" />赞
+    </view>
+    <view class="operations-collect operations-item" hover-class="none" hover-stop-propagation="false" bindtap="icollect">
+        <t-icon size="16" name="{{item.isCollect ? 'star-filled' : 'star'}}" style="margin-right: 2px;color: {{item.isCollect ? 'red' : '#333'}};" />
+    收藏
+    </view>
+    <view class="operations-share operations-item" hover-class="none" hover-stop-propagation="false">
+        <t-icon size="16" name="share" style="margin-right: 2px" />分享
     </view>
 </view>

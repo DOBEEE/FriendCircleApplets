@@ -28,10 +28,10 @@ Component({
     liked:false,
     showbar:false,
     vis:false,
-    //喜欢列表
-    likeList:[],
-    //评论列表
-    commentList:[]
+    // //喜欢列表
+    // likeList:[],
+    // //评论列表
+    // commentList:[]
   },
   lifetimes:{
     attached(){
@@ -39,9 +39,9 @@ Component({
         openid:app.globalData.openid
       })
       //请求并获取喜欢列表
-      this.reqLikeList();
-      //请求并获取评论列表
-      this.reqCommentList();
+      // this.reqLikeList();
+      // //请求并获取评论列表
+      // this.reqCommentList();
     }
   },
   /**

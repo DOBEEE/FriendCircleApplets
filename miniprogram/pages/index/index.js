@@ -3,6 +3,13 @@ const config = require('../../core/config')
 const SecCheck = require('../../core/SecCheck')
 const app = getApp();
 const PAGE_SIZE = config.PageSize;
+function generateRandomName() {
+  const adjectives = ["Cool", "Super", "Mighty", "Joyful", "Peaceful", "Cheerful"];
+  const animals = ["Panda", "Lion", "Eagle", "Tiger", "Koala", "Leopard"];
+  return adjectives[Math.floor(Math.random() * adjectives.length)] +
+         animals[Math.floor(Math.random() * animals.length)] +
+         Math.floor(Math.random() * 100);
+}
 Page({
 
   /**
@@ -17,7 +24,9 @@ Page({
     postid: '',
     oncomment: false,
     replyuserInfo: null,
-    replycontent: ''
+    replycontent: '',
+    pageIndex: 0,
+    end: false
   },
   taInput(e) {
     this.setData({
@@ -114,40 +123,87 @@ Page({
     })
     // markcard.closeActionBar();
   },
+  mockData({pageSize, pageIndex}) {
+    
+    const data = [];
+  const startId = pageSize * (pageIndex - 1) + 1;
+  
+  for (let i = 0; i < pageSize; i++) {
+    const id = startId + i;
+    const randomName = generateRandomName();
+    
+    data.push({
+      id: `id-${id}`,
+      openid: `openid-${id}`,
+      userInfo: {
+        avatarUrl: `https://img1.baidu.com/it/u=2969900212,853391486&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500`,
+        nickName: randomName,
+      },
+      content: `This is a sample post content by ${randomName}. Let's share some thoughts!`,
+      postimages: [
+        `https://img1.baidu.com/it/u=187817592,3356808617&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500`,
+        `https://img1.baidu.com/it/u=187817592,3356808617&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500`
+      ],
+      location: `Sample Location ${id}`,
+      date: new Date().toISOString(),
+      nickname: randomName,
+      isLike: true,
+      likeNum: 10,
+      isCollect: false,
+      collectNum: 20,
+    });
+  }
+  return data;
+  },
   reqPostData() {
+    if (this.end) return;
     let postList = this.data.postList
     let len = postList.length
     this.setData({
       vis:true
     })
-    wx.cloud.callFunction({
-      name: 'post',
-      data: {
-        action: 'query',
-        size: PAGE_SIZE,
-        step: len,
-        data: {}
-      },
-      success: r => {
-        wx.stopPullDownRefresh({
-          success: (res) => {},
-        })
-        console.log(r.result.data[0])
-        this.setData({
-          vis:false,
-          postList: postList.concat(r.result.data)
-        })
-      },
-      fail: r => {
-        console.log(r)
-
-      },
-      complete:res=>{
-        this.setData({
-          vis:false
-        })
-      }
+    const data = this.mockData({pageIndex: this.pageIndex, pageSize: PAGE_SIZE});
+    wx.stopPullDownRefresh({
+      success: (res) => {},
     })
+    this.setData({
+      vis:false,
+      postList: postList.concat(data)
+    })
+    // wx.cloud.callFunction({
+    //   name: 'post',
+    //   data: {
+    //     action: 'query',
+    //     size: PAGE_SIZE,
+    //     step: len,
+    //     data: {}
+    //   },
+    //   success: r => {
+    //     wx.stopPullDownRefresh({
+    //       success: (res) => {},
+    //     })
+    //     console.log(r.result.data[0])
+    //     this.setData({
+    //       vis:false,
+    //       postList: postList.concat(r.result.data)
+    //     })
+    //   },
+    //   fail: r => {
+    //     console.log(r)
+
+    //   },
+    //   complete:res=>{
+    //     this.setData({
+    //       vis:false
+    //     })
+    //   }
+    // })
+    if (data.length < PAGE_SIZE) {
+      this.end = true;
+    } else {
+      this.pageIndex++;
+    }
+    
   },
   showEditPage() {
     if (this.data.hasUserInfo) {
@@ -183,9 +239,11 @@ Page({
     if (app.globalData.userInfo != null) {
       this.setData({
         userInfo: app.globalData.userInfo,
-        hasUserInfo: true
+        hasUserInfo: true,
+        postList:[]
       })
     }
+    this.reqPostData()
   },
 
   /**
@@ -198,17 +256,17 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-    /**
-     * 请求朋友圈信息
-     */
-    this.setData({
-      postList:[]
-    },()=>{
-      this.reqPostData()
-    })
+  // onShow: function () {
+  //   /**
+  //    * 请求朋友圈信息
+  //    */
+  //   this.setData({
+  //     postList:[]
+  //   },()=>{
+  //     this.reqPostData()
+  //   })
    
-  },
+  // },
 
   /**
    * 生命周期函数--监听页面隐藏

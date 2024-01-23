@@ -1,1 +1,18 @@
 /* components/wxcard/index.wxss */
+.operations {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+.operations-item {
+    flex: 1;
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 5px 0;
+}
+.single {
+    padding-bottom: 0px;
+}

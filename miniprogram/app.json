@@ -1,8 +1,31 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/post/post",
-    "pages/index/index"
+    "pages/user/post"
   ],
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath":"images/shouye.png",
+        "selectedIconPath":"images/shouye-s.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/post/post",
+        "iconPath":"images/fabu.png",
+        "selectedIconPath":"images/fabu-s.png",
+        "text": "发布"
+      },
+      {
+        "pagePath": "pages/user/post",
+        "iconPath":"images/31wode.png",
+        "selectedIconPath":"images/31wode-s.png",
+        "text": "我的"
+      }
+    ]
+  },
   "window": {
     "backgroundColor": "#ffffff",
     "backgroundTextStyle": "light",
@@ -15,7 +38,8 @@
   },
   "usingComponents": {
     "mp-toptips": "weui-miniprogram/toptips/toptips",
-    "tui-loading": "/components/loading/loading"
+    "tui-loading": "/components/loading/loading",
+    "t-icon": "tdesign-miniprogram/icon/icon"
   },
   "sitemapLocation": "sitemap.json",
   "permission": {
