@@ -1,0 +1,3 @@
+<view class="detail-wrap" hover-class="none" hover-stop-propagation="false">
+  <wxcard cardInfo="{{dataInfo}}" id="wxcard-detail" class ="card" showAllImg="{{true}}" bind:baraction="baraction" bind:deletepost="deletepost"></wxcard> 
+</view>

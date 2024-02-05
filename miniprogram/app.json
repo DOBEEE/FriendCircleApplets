@@ -2,7 +2,13 @@
   "pages": [
     "pages/index/index",
     "pages/post/post",
-    "pages/user/post"
+    "pages/user/index",
+    "pages/detail/index",
+    "pages/login/index",
+    "pages/my/index",
+    "pages/follow-list/index",
+    "pages/follow/index",
+    "pages/work-list/index"
   ],
   "tabBar": {
     "list": [
@@ -13,13 +19,13 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/post/post",
-        "iconPath":"images/fabu.png",
-        "selectedIconPath":"images/fabu-s.png",
-        "text": "发布"
+        "pagePath": "pages/follow/index",
+        "iconPath":"images/follow.png",
+        "selectedIconPath":"images/follow-s.png",
+        "text": "关注"
       },
       {
-        "pagePath": "pages/user/post",
+        "pagePath": "pages/my/index",
         "iconPath":"images/31wode.png",
         "selectedIconPath":"images/31wode-s.png",
         "text": "我的"
@@ -30,7 +36,7 @@
     "backgroundColor": "#ffffff",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#ffffff",
-    "navigationBarTitleText": "",
+    "navigationBarTitleText": "IUShow - 哎哟秀",
     "navigationBarTextStyle": "black"
   },
   "useExtendedLib": {

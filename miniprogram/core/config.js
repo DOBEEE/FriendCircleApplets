@@ -3,5 +3,6 @@ module.exports = {
   //文本内容安全校验
   ContentSafe:true,
   //朋友圈查询 页面大小
-  PageSize:20
+  PageSize:20,
+  serverHost: 'https://api.tanguibuluo.vip'
 }

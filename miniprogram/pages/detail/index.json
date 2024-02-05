@@ -1,0 +1,6 @@
+{
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "wxcard":"/components/wxcard/index"
+  }
+}

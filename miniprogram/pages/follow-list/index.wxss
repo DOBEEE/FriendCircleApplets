@@ -1,0 +1,11 @@
+.button-wrap {
+    padding: 40rpx 30rpx;
+}
+.entry {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: #888;
+}

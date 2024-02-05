@@ -16,6 +16,9 @@
     </view>
     <button class="cu-btn bg-green shadow-blur" bindtap="handleSend">发送</button>
 </view>
+<view wx:if="{{postList.length === 0}}" class="entry" hover-class="none" hover-stop-propagation="false">
+  这里还没有任何作品~
+</view>
 <view wx:if="{{end}}" class="end" hover-class="none" hover-stop-propagation="false">
   到底啦~
 </view>

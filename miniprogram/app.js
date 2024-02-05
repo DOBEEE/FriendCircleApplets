@@ -1,4 +1,6 @@
 const config = require('core/config');
+const {login} = require('shared/index');
+const { get } = require('services/index')
 App({
   globalData: {
     openid: '',
@@ -13,35 +15,39 @@ App({
     if (userInfo != null) {
       this.globalData.userInfo = userInfo
     }
+    let token = wx.getStorageSync('token') || null
     let openid = wx.getStorageSync('openid') || null
     if(openid!=null){
       this.globalData.openid = openid
     }
-    /**
-     * 初始化云环境
-     */
-    wx.cloud.init({
-      env: config.CloudID,
-      traceUser: true
-    })
-    /**
-     * @获取用户openid
-     */
-    wx.cloud.callFunction({
-      name: 'openapi',
-      data: {
-        action: 'getOpenData'
-      },
-      success: r => {
-        // console.log(r)
-        let openid = r.result.openid
+    if(token!=null){
+      this.globalData.token = token
+    }
+    if (!openid || !token) {
+      login().then(({openid, token}) => {
         wx.setStorageSync('openid', openid)
-        this.globalData.openid = openid
-      },
-      fail: r => {
-        console.log(r)
-      }
-    })
+        wx.setStorageSync('token', token)
+        this.globalData.openid = openid;
+        this.globalData.token = token;
+        get({
+          url: '/userinfo',
+        }).then(({data}) => {
+          if (!data.isbind) {
+            wx.navigateTo({
+              url: '/pages/login/index',
+            });
+          }
+        });
+      });
+    }
+    
+    // wx.getUserProfile({
+    //   desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+    //   success: (res) => {
+    //     this.globalData.userInfo = res.userInfo
+    //     wx.setStorageSync('userInfo', res.userInfo)
+    //   }
+    // })
     
   }
 

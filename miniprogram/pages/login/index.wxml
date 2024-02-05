@@ -1,0 +1,5 @@
+<t-input label="账号" placeholder="请输入账号" value="{{user}}"></t-input>
+<t-input label="密码" type="password" placeholder="请输入密码" value="{{pwd}}"></t-input>
+<view class="button-wrap">
+  <t-button theme="primary" size="large" block bindtap="login">绑定</t-button>
+</view>

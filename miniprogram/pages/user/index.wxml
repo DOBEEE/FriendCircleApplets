@@ -1,0 +1,34 @@
+<view class="my-info" hover-class="none" hover-stop-propagation="false">
+    <image class="user-img " src="{{avatarUrl}}" mode="cover"></image>
+    <view class="" hover-class="none" hover-stop-propagation="false">
+        <text class="nickname" selectable="false" space="false" decode="false">
+        {{nickName}}
+        </text>
+        <view class="followfans" hover-class="none" hover-stop-propagation="false">
+            <text class="follows" bindtap="goFollows" selectable="false" space="false" decode="false">
+                关注 {{follow}}
+            </text>
+            <text class="fans" bindtap="goFans" selectable="false" space="false" decode="false">
+                粉丝 {{fans}}
+            </text>
+        </view>
+    </view>
+</view>
+<!-- <text wx:if="{{desc}}" class="desc" selectable="false" space="false" decode="false">
+    {{desc}}
+</text> -->
+<t-divider />
+<view class='imgArea'>
+    <view class="imgwrap" wx:for="{{works}}" wx:key="index">
+        <view class="" bindtap='goDetail' data-iteminfo="{{item}}" hover-class="none" hover-stop-propagation="false">
+            <image bindtap='showImg' src="{{item.content[0]}}" mode='aspectFill' data-imgidx="{{index}}" />
+            <view class="mark" hover-class="none" hover-stop-propagation="false">
+                
+            </view>
+            <view class="likenum" hover-class="none" hover-stop-propagation="false">
+                <t-icon size="16" name="heart" style="margin-right: 2rpx;color: #fff" />
+                <text class="">{{item.praised}}</text>
+            </view>
+        </view>
+    </view>
+</view>

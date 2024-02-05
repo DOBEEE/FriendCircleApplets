@@ -1,28 +1,45 @@
 <tui-loading visible="{{vis}}" text="" />
-<view class="single">
-    <image class="avatar " src="{{item.userInfo.avatarUrl}}" mode="cover"></image>
+<view class="card" hover-class="none" hover-stop-propagation="false">
+    <view class="single">
+    <view class="header" hover-class="none" hover-stop-propagation="false">
+         <image class="avatar " bindtap="goUserDetail" src="{{cardData.userInfo.avatarUrl}}" mode="cover"></image>
+         <view class="right" hover-class="none" hover-stop-propagation="false">
+            <view class="name-wrap" hover-class="none" hover-stop-propagation="false">
+                <text class='nickname'>{{cardData.userInfo.nickName}}</text>
+                <t-button wx:if="{{!cardData.isfollow}}" theme="primary" icon='plus' size="extra-small" bindtap="follow" style="margin: 0;margin-left: 10rpx;padding-right: 20rpx;" shape="round">关注</t-button>
+                <t-button wx:if="{{cardData.isfollow}}" theme="light" size="extra-small" bindtap="follow" style="margin: 0;margin-left: 10rpx;padding-right: 20rpx" shape="round">已关注</t-button>
+            </view>
+            
+            <text class="time">{{cardData.creatdate}}</text>
+            
+         </view>
+         
+    </view>
+   
     <view class='main '>
-        <view class='nickname'>{{item.userInfo.nickName}}</view>
-        <view wx:if="{{item.content != 'null'}}">
-            <view class='main-comtent' style='{{isShowOrHideComtent ? "" : "max-height: 60pt"}}'>
-                {{item.content}}
+        <view wx:if="{{cardData.brief != 'null'}}">
+            <view class='main-comtent'>
+                {{cardData.brief}}
             </view>
             <!--text class='comtent-showOrHide' catchtap='ShowOrHideComtent'>{{allOrPart}}</text-->
         </view>
-        <view class='imgArea' bindtap='showImg' data-outidx="{{index}}">
-            <view wx:for="{{item.postimages}}" wx:key="index">
-                <image src="{{item}}" mode='aspectFill' data-imgidx="{{index}}" />
+        <view class='imgArea'  data-outidx="{{index}}">
+            <view class="imgwrap" wx:if="{{showAllImg || index <= 8}}" wx:for="{{cardData.content}}" wx:key="index">
+                <view class="more-wrap" bindtap='goDetail' wx:if="{{!showAllImg && index == 8 && cardData.content.length > 9}}" hover-class="none" hover-stop-propagation="false">
+                    <text class="more" >+{{cardData.content.length - 9}}</text>
+                </view>
+                
+                <image  bindtap='showImg' src="{{item}}" mode='aspectFill' data-imgidx="{{index}}" />
             </view>
         </view>
-        <view class='location' wx:if="{{item.location != null && item.location != undefined}}">
-            <text class='iconfont icon-zuobiaonormal'></text>
-            <text>{{item.location}}</text>
-        </view>
+        <view class='location' wx:if="{{cardData.location != null && cardData.location != undefined}}">
+                <text class='iconfont icon-zuobiaonormal'></text>
+                <text>{{cardData.location}}</text>
+            </view>
         <!--底部操作模块-->
         <view class='timeArea'>
-            <text>{{item.date}}</text>
             <text style="margin-left:20rpx;font-size:13px;color:#5882FA;" bindtap="delit" data-idx="{{item._id}}"
-                wx:if="{{item.openid == openid}}">删除</text>
+                wx:if="{{cardData.openid == openid}}">删除</text>
             <!-- <view class='timeArea-right'>
                 <view class='zan-pinglun' wx:if="{{showbar}}" style="height:90rpx;">
                     <text class='iconfont icon-xin' data-idx="{{item.id}}" data-index="{{index}}"
@@ -67,13 +84,14 @@
 </view>
 <view class="operations">
     <view class="operations-like operations-item" hover-class="none" hover-stop-propagation="false" bindtap="ilike">
-        <t-icon size="16" name="{{item.isLike ? 'heart-filled' : 'heart'}}" style="margin-right: 2px;color: {{item.isLike ? 'red' : '#333'}};" />赞
+        <t-icon size="16" name="{{cardData.ispraised ? 'heart-filled' : 'heart'}}" style="margin-right: 2px;color: {{cardData.ispraised ? 'red' : '#333'}};" />{{cardData.praised}}
     </view>
     <view class="operations-collect operations-item" hover-class="none" hover-stop-propagation="false" bindtap="icollect">
-        <t-icon size="16" name="{{item.isCollect ? 'star-filled' : 'star'}}" style="margin-right: 2px;color: {{item.isCollect ? 'red' : '#333'}};" />
-    收藏
+        <t-icon size="16" name="{{cardData.iscollect ? 'star-filled' : 'star'}}" style="margin-right: 2px;color: {{cardData.iscollect ? 'red' : '#333'}};" />
+    {{cardData.collect}}
     </view>
-    <view class="operations-share operations-item" hover-class="none" hover-stop-propagation="false">
-        <t-icon size="16" name="share" style="margin-right: 2px" />分享
-    </view>
+    <button class="operations-share operations-item" open-type="share" hover-class="none" hover-stop-propagation="false" bindtap="ishare">
+        <t-icon size="16" name="share" style="margin-right: 2px" /> {{cardData.share}}
+    </button>
+</view>
 </view>

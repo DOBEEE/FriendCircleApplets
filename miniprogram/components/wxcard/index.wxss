@@ -4,15 +4,122 @@
     display: flex;
     align-items: center;
     flex-direction: row;
+    /* margin-top: 10rpx; */
 }
 .operations-item {
     flex: 1;
-    background-color: aliceblue;
+    background-color: transparent;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    padding: 0;
     padding: 5px 0;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    outline: none;
+    font-size: 12px;
+    align-items: center;
+    line-height: 2;
+    border-right: 1rpx solid #eee;
+}
+.operations-item::after {
+    border: none;
+    border-radius: 0;
+    outline: none;
+}
+.card {
+    margin-bottom: 28rpx;
+    background-color: #fff;
 }
 .single {
     padding-bottom: 0px;
+    display: flex;
+    flex-direction: column;
+    
+    
+}
+.nickname {
+    max-width: 380rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.single .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    padding: 0;
+}
+.single .header .avatar {
+    border-radius: 50%;
+    height: 100rpx;
+    width: 100rpx;
+}
+.single .header .right {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+.name-wrap {
+    display: flex;
+    flex-direction: row;
+}
+.single .header .right .time {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    line-height: 1.5;
+    padding-top: 10rpx;
+}
+.main {
+    flex-grow: 1;
+    width: 100%;
+    padding-bottom: 20rpx;
+}
+.main-comtent {
+    padding: 20rpx 0;
+}
+.imgArea {
+    padding-right: 0;
+}
+.imgArea .more {
+    font-size: 30px;
+    
+    /* top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%); */
+    
+    
+    color: #fff;
+}
+.more-wrap {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 10rpx);
+    height: calc(100% - 10rpx);
+    top: 0;
+    left: 0;
+    background-color: #000;
+    opacity: 0.5;
+    z-index: 1;
+}
+.imgwrap {
+    position: relative;
+    /* padding: 0 10rpx 10rpx 0; */
+    width: 33%;
+    padding-top: 33%;
+    
+}
+.imgArea image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0 10rpx 10rpx 0;
 }

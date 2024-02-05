@@ -1,0 +1,17 @@
+<view class="wrap">
+  <t-cell
+    wx:for="{{data}}"
+    wx:key="userid"
+    title="{{item.nick}}"
+    description="{{followtypeMap[item.type]}}"
+    align="center"
+    image="{{item.header}}"
+    hover
+    arrow 
+    data-userid="{{item.userid}}"
+    bindtap="goUserDetail"
+  />
+  <view wx:if="{{data.length === 0}}" class="entry" hover-class="none" hover-stop-propagation="false">
+    列表暂时为空哦~
+  </view>
+</view>

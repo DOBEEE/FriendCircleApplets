@@ -1,0 +1,14 @@
+<view class='imgArea'>
+    <view class="imgwrap" wx:for="{{data}}" wx:key="index">
+        <view class="" bindtap='goDetail' data-iteminfo="{{item}}" hover-class="none" hover-stop-propagation="false">
+            <image bindtap='showImg' src="{{item.content[0]}}" mode='aspectFill' data-imgidx="{{index}}" />
+            <view class="mark" hover-class="none" hover-stop-propagation="false">
+                
+            </view>
+            <view class="likenum" hover-class="none" hover-stop-propagation="false">
+                <t-icon size="16" name="heart" style="margin-right: 2rpx;color: #fff" />
+                <text class="">{{item.praised}}</text>
+            </view>
+        </view>
+    </view>
+</view>

@@ -14,11 +14,6 @@ page {
     background: #fff;
     z-index: 9999;
 }
-.baseimg
-{
-  width:100%;
-  height:250rpx;
-}
 .end {
     display: flex;
     flex-direction: row;
@@ -27,6 +22,20 @@ page {
     color: #999;
     padding: 10rpx;
 }
+.entry {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: #888;
+}
+.baseimg
+{
+  width:100%;
+  height:250rpx;
+}
+
 .unickname
 {
   width:400rpx;

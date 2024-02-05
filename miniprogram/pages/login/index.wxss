@@ -1,0 +1,3 @@
+.button-wrap {
+    padding: 40rpx 30rpx;
+}

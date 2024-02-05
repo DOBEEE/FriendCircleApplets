@@ -28,6 +28,7 @@ Page({
     replycontent: '',
     pageIndex: 1,
     end: false,
+    pageid: 1,
     pageNum: 10,
   },
   taInput(e) {
@@ -133,12 +134,13 @@ Page({
       end: refresh ? false : this.data.end 
     })
     get({
-      url: '/recommends',
+      url: '/follows',
       data: {
         pageid: refresh ? 1 : this.data.pageIndex,
         pageNum: this.data.pageNum,
       }
     }).then(({data}) => {
+      console.log(1111, data)
       wx.stopPullDownRefresh({
         success: (res) => {},
       })
@@ -158,7 +160,6 @@ Page({
           end: true
         })
       } else {
-        console.log(2222);
         this.setData({
           pageIndex: refresh ? 2 : this.data.pageIndex + 1
         })
