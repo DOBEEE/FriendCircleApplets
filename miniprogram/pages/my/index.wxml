@@ -28,7 +28,6 @@
   <t-tab-panel label="我的作品" value="works" />
   <t-tab-panel label="我的点赞" value="likes" />
   <t-tab-panel label="我的收藏" value="collects" />
-  <t-tab-panel label="浏览历史" value="history" />
 </t-tabs>
 <view class='imgArea'>
     <view class="imgwrap" wx:for="{{works[currentTab]}}" wx:key="{{item.id}}">

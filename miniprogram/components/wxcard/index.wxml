@@ -90,7 +90,7 @@
         <t-icon size="16" name="{{cardData.iscollect ? 'star-filled' : 'star'}}" style="margin-right: 2px;color: {{cardData.iscollect ? 'red' : '#333'}};" />
     {{cardData.collect}}
     </view>
-    <button class="operations-share operations-item" open-type="share" hover-class="none" hover-stop-propagation="false" bindtap="ishare">
+    <button class="operations-share operations-item" data-id="{{cardData.id}}" open-type="share" hover-class="none" hover-stop-propagation="false">
         <t-icon size="16" name="share" style="margin-right: 2px" /> {{cardData.share}}
     </button>
 </view>

@@ -36,7 +36,14 @@ Page({
       });
     }
   },
-
+  onShareAppMessage: function(options) {
+    // 设置分享的内容
+    return {
+      title: 'IUShow - AI 助力孩子学习和创作分享',
+      path: '/pages/detail/index?workid='+options.target.dataset.id, // 可以携带页面参数
+      // imageUrl: 'https://example.com/image.png' // 分享图标（可选）
+    };
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -72,11 +79,4 @@ Page({
   onUnload: function () {
 
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

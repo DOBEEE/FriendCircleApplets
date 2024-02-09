@@ -10,6 +10,17 @@ Page({
     user: '',
     pwd: '',
   },
+  
+  userChange(e) {
+    this.setData({
+      user: e.detail.value
+    })
+  },
+  pwdChange(e) {
+    this.setData({
+      pwd: e.detail.value
+    })
+  },
   login() {
     if (!this.data.user) {
       wx.showToast({

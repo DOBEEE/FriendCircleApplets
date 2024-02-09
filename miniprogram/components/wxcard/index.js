@@ -62,14 +62,15 @@ Component({
       // this.reqCommentList();
     }
   },
-  onShareAppMessage: function(options) {
-    // 设置分享的内容
-    return {
-      title: 'IUShow - AI 助力孩子学习和创作分享',
-      path: '/pages/detail/index?workid='+this.data.cardData.id, // 可以携带页面参数
-      // imageUrl: 'https://example.com/image.png' // 分享图标（可选）
-    };
-  },
+  // onShareAppMessage: function(options) {
+  //   console.log(3333, options.target)
+  //   // 设置分享的内容
+  //   return {
+  //     title: 'IUShow - AI 助力孩子学习和创作分享',
+  //     path: '/pages/detail/index?workid='+this.data.cardData.id, // 可以携带页面参数
+  //     // imageUrl: 'https://example.com/image.png' // 分享图标（可选）
+  //   };
+  // },
   /**
    * 组件的方法列表
    */
@@ -151,7 +152,7 @@ Component({
     showImg(e) {
       let imgidx = e.target.dataset.imgidx;
       let imgArr = this.properties.cardInfo.content
-      console.log(2222, imgidx)
+  
       wx.previewImage({
         current: imgArr[imgidx], // 当前显示图片的http链接
         urls: imgArr // 需要预览的图片http链接列表
