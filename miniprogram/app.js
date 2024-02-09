@@ -1,6 +1,6 @@
 const config = require('core/config');
 const {login} = require('shared/index');
-const { get } = require('services/index')
+const { get, post } = require('services/index')
 App({
   globalData: {
     openid: '',
@@ -47,7 +47,7 @@ App({
                     success: (res) => {
                       // this.globalData.userInfo = res.userInfo
                       wx.setStorageSync('userInfo', res.userInfo)
-                      get({
+                      post({
                         url: '/setuser',
                         data: {
                           userinfo: {
