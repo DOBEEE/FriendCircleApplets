@@ -37,34 +37,38 @@ App({
               url: '/pages/login/index',
             });
           }
-          if (!data.isnew) {
-            setTimeout(() => {
-              wx.showActionSheet({
-                itemList: ['获取微信头像和昵称'],
-                success () {
-                  wx.getUserProfile({
-                    desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-                    success: (res) => {
-                      // this.globalData.userInfo = res.userInfo
-                      wx.setStorageSync('userInfo', res.userInfo)
-                      post({
-                        url: '/setuser',
-                        data: {
-                          userinfo: {
-                            header: res.userInfo.avatarUrl,
-                            nick: res.userInfo.nickName,
-                          }
-                        }
-                      })
-                    }
-                  })
-                },
-                fail (res) {
-                  console.log(res.errMsg)
-                }
-              })
-            }, 300)
-          }
+          wx.setStorageSync('userInfo', {
+            nickName: data.nick,
+            avatarUrl: data.header
+          })
+          // if (!data.isnew) {
+          //   setTimeout(() => {
+          //     wx.showActionSheet({
+          //       itemList: ['获取微信头像和昵称'],
+          //       success () {
+          //         wx.getUserProfile({
+          //           desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+          //           success: (res) => {
+          //             // this.globalData.userInfo = res.userInfo
+          //             wx.setStorageSync('userInfo', res.userInfo)
+          //             post({
+          //               url: '/setuser',
+          //               data: {
+          //                 userinfo: {
+          //                   header: res.userInfo.avatarUrl,
+          //                   nick: res.userInfo.nickName,
+          //                 }
+          //               }
+          //             })
+          //           }
+          //         })
+          //       },
+          //       fail (res) {
+          //         console.log(res.errMsg)
+          //       }
+          //     })
+          //   }, 300)
+          // }
           
         });
       });

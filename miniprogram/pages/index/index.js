@@ -38,6 +38,14 @@ Page({
       // imageUrl: 'https://example.com/image.png' // 分享图标（可选）
     };
   },
+  onShareTimeline: function(options) {
+    // 设置分享的内容
+    return {
+      title: 'IUShow - AI 助力孩子学习和创作分享',
+      path: '/pages/detail/index?workid='+options.target.dataset.id, // 可以携带页面参数
+      // imageUrl: 'https://example.com/image.png' // 分享图标（可选）
+    };
+  },
   taInput(e) {
     this.setData({
       replycontent: e.detail.value

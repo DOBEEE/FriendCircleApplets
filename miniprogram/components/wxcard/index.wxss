@@ -64,6 +64,7 @@
 .name-wrap {
     display: flex;
     flex-direction: row;
+    align-item: center;
 }
 .single .header .right .time {
     display: flex;

@@ -104,16 +104,16 @@ Component({
       })
     },
 
-    chooseLocation() {
-      let self = this
-      wx.chooseLocation({
-        success(res) {
-          self.setData({
-            location: res.name
-          })
+    // chooseLocation() {
+    //   let self = this
+    //   wx.chooseLocation({
+    //     success(res) {
+    //       self.setData({
+    //         location: res.name
+    //       })
 
-        }
-      })
-    }
+    //     }
+    //   })
+    // }
   }
 })
