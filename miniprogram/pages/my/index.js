@@ -1,5 +1,5 @@
-const { get } = require('../../services/index')
-
+const { get, post } = require('../../services/index')
+const config = require('../../core/config');
 Page({
 
   /**
@@ -9,6 +9,8 @@ Page({
     nickName: '',
     avatarUrl: '',
     currentTab: 'works',
+    _usernick: '',
+    showWithInput: false,
     works:{
       works: [],
       likes: [],
@@ -31,6 +33,9 @@ Page({
           pageNum: this.data.pageNum,
         }
     }).then((res) => {
+      wx.stopPullDownRefresh({
+        success: (res) => {},
+      })
       this.setData({
         works: {
           ...this.data.works,
@@ -38,31 +43,110 @@ Page({
         }
       });
     });
-    // this.setData({
-    //   userInfo: {
-    //     listdata: Array.from({length: 10}).map(i => (
-    //       {
-    //         id: `id-1`,
-    //         openid: `openid-2`,
-    //         userInfo: {
-    //           avatarUrl: `https://img1.baidu.com/it/u=2969900212,853391486&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500`,
-    //           nickName: '11111',
-    //         },
-    //         content: `This is a sample post content by 2. Let's share some thoughts!`,
-    //         postimages: Array.from({length: 10}).map((i, idx) => idx % 2 > 0 ? `https://img1.baidu.com/it/u=187817592,3356808617&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500`: 
-    //           'https://pic1.zhimg.com/v2-4253112469acdc04bd1e78187215b976_r.jpg?source=1940ef5c'
-    //         ),
-    //         location: `Sample Location 2`,
-    //         date: new Date().toISOString(),
-    //         nickname: '2222',
-    //         isLike: true,
-    //         likeNum: 10,
-    //         isCollect: false,
-    //         collectNum: 20,
-    //       }
-    //     ))
-    //   }
-    // })
+  },
+  avatarHandle() {
+    const self = this;
+    wx.chooseMedia({
+      count: 1,
+      mediaType: ['image'],
+      sourceType: ['album', 'camera'],
+      maxDuration: 30,
+      camera: 'back',
+      success(res) {
+        wx.showLoading({
+          title: '',
+          mask: true,
+        });
+        wx.uploadFile({
+          filePath: res.tempFiles[0].tempFilePath,
+          name: 'file',
+          url: config.serverHost + '/upload',
+          header: {
+            cookie: wx.getStorageSync('sessionid')
+          },
+          formData: {
+            token: wx.getStorageSync('token') || null
+          },
+          fail() {
+            wx.hideLoading();
+            wx.showToast({
+              title: '上传失败',
+              icon: 'error'
+            });
+          },
+          success: (res) => {
+            
+            const data = JSON.parse(res.data);
+            if (data.success) {
+              post({
+                url: '/setuser',
+                  data: {
+                    userinfo: {
+                      header: data.url
+                    },
+                  }
+              }).then((res) => {
+                self.setData({
+                  avatarUrl: data.url
+                });
+                wx.hideLoading();
+                wx.showToast({
+                  title: '修改成功',
+                  icon: 'success',
+                  duration: 1500,
+                  mask: false,
+                });
+              });
+            } else {
+              wx.hideLoading();
+              wx.showToast({
+                title: data.message,
+                icon: 'error'
+              });
+            }
+          }
+        })
+        
+      }
+    })
+  },
+  userChange(e) {
+    this.setData({
+      _usernick: e.detail.value
+    })
+  },
+  showDialog(e) {
+    const { key } = e.currentTarget.dataset;
+    this.setData({ [key]: true, dialogKey: key });
+  },
+
+  closeDialog() {
+    this.setData({ showWithInput: false });
+  },
+  nickNameHandle(e) {
+    this.setData({ showWithInput: true });
+  },
+  confirmNickName(e) {
+    post({
+      url: '/setuser',
+        data: {
+          userinfo: {
+            nick: this.data._usernick
+          },
+        }
+    }).then((res) => {
+      wx.showToast({
+        title: '修改成功',
+        icon: 'success',
+        duration: 1500,
+        mask: false,
+      });
+      this.setData({
+        nickName: this.data._usernick,
+        showWithInput: false
+      });
+    });
+    
   },
   loginhandle() {
     wx.navigateTo({
@@ -78,9 +162,6 @@ Page({
     })
   },
   onTabsChange(event) {
-    console.log(`Change tab, tab-panel value is ${event.detail.value}.`);
-
-    
     this.setData({
       currentTab: event.detail.value
     }, () => {
@@ -88,7 +169,6 @@ Page({
     });
   },
   goDetail(e) {
-    console.log(2222, e.currentTarget)
     const data = e.currentTarget.dataset.iteminfo
     wx.navigateTo({
       url: '/pages/detail/index',
@@ -157,15 +237,15 @@ Page({
    * 获取用户信息
    * @param {} e 
    */
-getUserProfile(e) {
-  get({
-    url: '/userinfo',
-  }).then(({data}) => {
-    wx.setStorageSync('userInfo', {
-      nickName: data.nick,
-      avatarUrl: data.header
-    })
-  })
+    getUserProfile(e) {
+      get({
+        url: '/userinfo',
+      }).then(({data}) => {
+        wx.setStorageSync('userInfo', {
+          nickName: data.nick,
+          avatarUrl: data.header
+        })
+      })
   // wx.getUserProfile({
   //   desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
   //   success: (res) => {
@@ -190,7 +270,6 @@ getUserProfile(e) {
    */
   onShow: function () {
     let userInfo = wx.getStorageSync('userInfo') || null
-    console.log(222, userInfo)
     if (userInfo != null) {
       this.setData({
         nickName: userInfo.nickName,
@@ -217,7 +296,20 @@ getUserProfile(e) {
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    get({
+      url: '/userinfo',
+    }).then(({data}) => {
+      this.setData({
+        "praised": data.praised,
+        "follow": data.follow,
+        "fans": data.fans,
+        "desc": data.desc,
+        isbind: data.isbind,
+        nickName: userInfo.nickName,
+        avatarUrl: userInfo.avatarUrl
+      });
+    });
+    this.getData();
   },
 
   /**

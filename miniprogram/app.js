@@ -23,7 +23,7 @@ App({
     if(token!=null){
       this.globalData.token = token
     }
-    if (!openid || !token) {
+    // if (!openid || !token) {
       login().then(({openid, token}) => {
         wx.setStorageSync('openid', openid)
         wx.setStorageSync('token', token)
@@ -72,7 +72,7 @@ App({
           
         });
       });
-    }
+    // }
     
   }
 

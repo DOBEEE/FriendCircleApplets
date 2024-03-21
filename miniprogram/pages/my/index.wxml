@@ -1,51 +1,126 @@
-<view class="my-info" hover-class="none" hover-stop-propagation="false">
-    <image wx:if="{{avatarUrl}}" class="user-img " src="{{avatarUrl}}" mode="cover"></image>
-    <image wx:else class="user-img " bindtap="getUserProfile" mode="cover"></image>
-    <view class="" hover-class="none" hover-stop-propagation="false">
-        <text wx:if="{{nickName}}" class="nickname" selectable="false" space="false" decode="false">
-            {{nickName}}
-        </text>
-        <text wx:else class="nickname" bindtap="getUserProfile" selectable="false" space="false" decode="false">
+<view class="my-info">
+	<image
+	 wx:if="{{avatarUrl}}"
+	 class="user-img "
+	 bindtap="avatarHandle"
+	 src="{{avatarUrl}}"
+	 mode="cover"
+	/>
+	<image
+	 wx:else
+	 class="user-img "
+	 bindtap="getUserProfile"
+	 mode="cover"
+	/>
+	<view class="" hover-class="none" hover-stop-propagation="false">
+		<view
+		 wx:if="{{nickName}}"
+		 bindtap='nickNameHandle'
+		 class="nickname"
+		 selectable="false"
+		 space="false"
+		 decode="false"
+		>
+			{{nickName}}
+			<t-icon
+			 name="edit-2"
+			 size="36rpx"
+			 style="margin-left: 4px;"
+			 data-name="edit-2"
+			/>
+		</view>
+
+		<text wx:else class="nickname" bindtap="getUserProfile" selectable="false" space="false" decode="false">
             点击获取头像和昵称
         </text>
-        <view class="followfans" hover-class="none" hover-stop-propagation="false">
-            <text class="follows" bindtap="goFollows" selectable="false" space="false" decode="false">
+		<view class="followfans" hover-class="none" hover-stop-propagation="false">
+			<text class="follows" bindtap="goFollows" selectable="false" space="false" decode="false">
                 关注 {{follow}}
             </text>
-            <text class="fans" bindtap="goFans" selectable="false" space="false" decode="false">
+			<text class="fans" bindtap="goFans" selectable="false" space="false" decode="false">
                 粉丝 {{fans}}
             </text>
-        </view>
-    </view>
-    
+		</view>·
+	</view>
+
 </view>
+<t-dialog
+ visible="{{showWithInput}}"
+ title="修改昵称"
+ confirm-btn="确定"
+ cancel-btn="取消"
+ bind:confirm="confirmNickName"
+ bind:cancel="closeDialog"
+>
+	<t-input
+	 borderless
+	 class="dialog-input"
+	 clearable
+	 value="{{_usernick}}"
+	 bindchange="userChange"
+	 slot="content"
+	 placeholder="输入昵称"
+	 placeholder-class="placeholder"
+	/>
+</t-dialog>
 <text wx:if="{{desc}}" class="desc" selectable="false" space="false" decode="false">
     {{desc}}
 </text>
-<t-divider />
-<t-cell wx:if="{{!isbind}}" title="绑定账号" bindtap='loginhandle' hover arrow />
-<t-tabs defaultValue="works" bind:change="onTabsChange" bind:click="onTabsClick" t-class="custom-tabs">
-  <t-tab-panel label="我的作品" value="works" />
-  <t-tab-panel label="我的点赞" value="likes" />
-  <t-tab-panel label="我的收藏" value="collects" />
+<t-divider/>
+<t-cell
+ wx:if="{{!isbind}}"
+ title="绑定账号"
+ bindtap='loginhandle'
+ hover
+ arrow
+/>
+<t-tabs
+ defaultValue="works"
+ bind:change="onTabsChange"
+ bind:click="onTabsClick"
+ t-class="custom-tabs"
+>
+	<t-tab-panel label="我的作品" value="works" />
+	<t-tab-panel label="我的点赞" value="likes" />
+	<t-tab-panel label="我的收藏" value="collects" />
 </t-tabs>
 <view class='imgArea'>
-    <view class="imgwrap" wx:for="{{works[currentTab]}}" wx:key="{{item.id}}">
-        <view class="" bindtap='goDetail' data-iteminfo="{{item}}" hover-class="none" hover-stop-propagation="false">
-            <image bindtap='showImg' src="{{item.content[0]}}" mode='aspectFill' data-imgidx="{{index}}" />
-            <view class="mark" hover-class="none" hover-stop-propagation="false">
-                
-            </view>
-            <view class="likenum" hover-class="none" hover-stop-propagation="false">
-                <t-icon size="16" name="heart" style="margin-right: 2rpx;color: #fff" />
-                <text class="">{{item.praised}}</text>
-            </view>
-        </view>
-    </view>
-    <view class="entry" wx:if="{{currentTab === 'works' && works['works'].length === 0}}" hover-class="none" hover-stop-propagation="false">
-        快点绑定IR Chat 账号，开启自己的AI创作吧！
-    </view>
-    <view class="entry" wx:if="{{currentTab !== 'works' && works[currentTab].length === 0}}" hover-class="none" hover-stop-propagation="false">
-        空空如也~
-    </view>
+	<view class="imgwrap" wx:for="{{works[currentTab]}}" wx:key="{{item.id}}">
+		<view
+		 class=""
+		 bindtap='goDetail'
+		 data-iteminfo="{{item}}"
+		 hover-class="none"
+		 hover-stop-propagation="false"
+		>
+			<image
+			 bindtap='showImg'
+			 src="{{item.content[0]}}"
+			 mode='aspectFill'
+			 data-imgidx="{{index}}"
+			/>
+			<view class="mark" hover-class="none" hover-stop-propagation="false" />
+			<view class="likenum" hover-class="none" hover-stop-propagation="false">
+				<t-icon size="16" name="heart" style="margin-right: 2rpx;color: #fff" />
+				<text class="">{{item.praised}}</text>
+			</view>
+		</view>
+	</view>
+	<view
+	 class="entry"
+	 wx:if="{{currentTab === 'works' && works['works'].length === 0}}"
+	 hover-class="none"
+	 hover-stop-propagation="false"
+	>
+		快点绑定IR Chat 账号，开启自己的AI创作吧！
+	</view>
+	<view
+	 class="entry"
+	 wx:if="{{currentTab !== 'works' && works[currentTab].length === 0}}"
+	 hover-class="none"
+	 hover-stop-propagation="false"
+	>
+		空空如也~
+	</view>
 </view>
+

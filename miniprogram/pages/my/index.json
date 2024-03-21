@@ -4,6 +4,10 @@
     "t-avatar": "tdesign-miniprogram/avatar/avatar",
     "t-divider": "tdesign-miniprogram/divider/divider",
     "t-tabs": "tdesign-miniprogram/tabs/tabs",
-    "t-tab-panel": "tdesign-miniprogram/tab-panel/tab-panel"
-  }
+    "t-tab-panel": "tdesign-miniprogram/tab-panel/tab-panel",
+    "t-input": "tdesign-miniprogram/input/input",
+    "t-dialog": "tdesign-miniprogram/dialog/dialog",
+    "t-icon": "tdesign-miniprogram/icon/icon"
+  },
+  "enablePullDownRefresh": true
 }
