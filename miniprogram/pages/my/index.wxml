@@ -1,18 +1,21 @@
 <view class="my-info">
-	<image
+	<!-- <image
 	 wx:if="{{avatarUrl}}"
 	 class="user-img "
 	 bindtap="avatarHandle"
 	 src="{{avatarUrl}}"
 	 mode="cover"
-	/>
-	<image
+	/> -->
+	<button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+		<image class="avatar" class="user-img" mode="cover" src="{{avatarUrl}}"></image>
+	</button> 
+	<!-- <image
 	 wx:else
 	 class="user-img "
 	 bindtap="getUserProfile"
 	 mode="cover"
-	/>
-	<view class="" hover-class="none" hover-stop-propagation="false">
+	/> -->
+	<view class="nick" hover-class="none" hover-stop-propagation="false">
 		<view
 		 wx:if="{{nickName}}"
 		 bindtap='nickNameHandle'
@@ -20,6 +23,7 @@
 		 selectable="false"
 		 space="false"
 		 decode="false"
+		 
 		>
 			{{nickName}}
 			<t-icon
@@ -56,6 +60,7 @@
 	 borderless
 	 class="dialog-input"
 	 clearable
+	 type="nickname"
 	 value="{{_usernick}}"
 	 bindchange="userChange"
 	 slot="content"

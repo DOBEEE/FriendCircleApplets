@@ -8,6 +8,20 @@
     padding: 20px;
     align-items: center;
 }
+.avatar-wrapper {
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: none;
+    line-height: 1;
+    outline: none;
+}
+.avatar-wrapper::after {
+    border: none;
+}
+.nick {
+    line-height: 1;
+}
 .user-img {
     margin-right: 20rpx;
     width: 150rpx;

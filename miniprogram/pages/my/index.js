@@ -44,6 +44,59 @@ Page({
       });
     });
   },
+  onChooseAvatar(e) {
+    const { avatarUrl } = e.detail;
+    const self = this;
+    console.log(2233, avatarUrl)
+    wx.uploadFile({
+      filePath: avatarUrl,
+      name: 'file',
+      url: config.serverHost + '/upload',
+      header: {
+        cookie: wx.getStorageSync('sessionid')
+      },
+      formData: {
+        token: wx.getStorageSync('token') || null
+      },
+      fail() {
+        wx.hideLoading();
+        wx.showToast({
+          title: '上传失败',
+          icon: 'error'
+        });
+      },
+      success: (res) => {
+        const data = JSON.parse(res.data);
+        if (data.success) {
+          post({
+            url: '/setuser',
+              data: {
+                userinfo: {
+                  header: data.url
+                },
+              }
+          }).then((res) => {
+            self.setData({
+              avatarUrl: data.url
+            });
+            wx.hideLoading();
+            wx.showToast({
+              title: '修改成功',
+              icon: 'success',
+              duration: 1500,
+              mask: false,
+            });
+          });
+        } else {
+          wx.hideLoading();
+          wx.showToast({
+            title: data.message,
+            icon: 'error'
+          });
+        }
+      }
+    })
+  },
   avatarHandle() {
     const self = this;
     wx.chooseMedia({
@@ -57,55 +110,7 @@ Page({
           title: '',
           mask: true,
         });
-        wx.uploadFile({
-          filePath: res.tempFiles[0].tempFilePath,
-          name: 'file',
-          url: config.serverHost + '/upload',
-          header: {
-            cookie: wx.getStorageSync('sessionid')
-          },
-          formData: {
-            token: wx.getStorageSync('token') || null
-          },
-          fail() {
-            wx.hideLoading();
-            wx.showToast({
-              title: '上传失败',
-              icon: 'error'
-            });
-          },
-          success: (res) => {
-            
-            const data = JSON.parse(res.data);
-            if (data.success) {
-              post({
-                url: '/setuser',
-                  data: {
-                    userinfo: {
-                      header: data.url
-                    },
-                  }
-              }).then((res) => {
-                self.setData({
-                  avatarUrl: data.url
-                });
-                wx.hideLoading();
-                wx.showToast({
-                  title: '修改成功',
-                  icon: 'success',
-                  duration: 1500,
-                  mask: false,
-                });
-              });
-            } else {
-              wx.hideLoading();
-              wx.showToast({
-                title: data.message,
-                icon: 'error'
-              });
-            }
-          }
-        })
+        
         
       }
     })
